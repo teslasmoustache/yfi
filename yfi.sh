@@ -57,13 +57,19 @@ case $choice in
         vlc $1;
         ;;
 	"Copy to Clipboard")
-	cat /tmp/old_yturl.txt | xclip -selection c;
-	echo "the new URL"; 
-	tput setaf 6;
-	tput bold;
-	echo $(cat /tmp/old_yturl.txt); 
-	tput sgr0;
-	echo "has been copied to your clipboard";
+	if [ -f /usr/bin/xclip ]
+	then
+		cat /tmp/old_yturl.txt | xclip -selection c;
+		echo "the new URL"; 
+		tput setaf 6;
+		tput bold;
+		echo $(cat /tmp/old_yturl.txt); 
+		tput sgr0;
+		echo "has been copied to your clipboard";
+	else
+		echo "the package 'xclip' is not installed."
+		echo "You must install it to use this option."
+	fi
 #        *)
             echo "What do you want to do?";
 
